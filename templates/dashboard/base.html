@@ -1,0 +1,26 @@
+{% include 'dashboard/_header.html' %}
+
+        <!--**********************************
+            Sidebar start
+        ***********************************-->
+{% include 'dashboard/_sidebar.html' %}
+        <!--**********************************
+            Sidebar end
+        ***********************************-->
+
+        <!--**********************************
+            Content body start
+        ***********************************-->
+<div class="content-body">
+
+<div class="container-fluid mt-3">
+{% block content %} {% endblock %}
+</div>
+<!-- #/ container -->
+</div>
+        <!--**********************************
+            Content body end
+        ***********************************-->
+
+
+{% include 'dashboard/_footer.html' %}

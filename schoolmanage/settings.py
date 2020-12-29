@@ -14,11 +14,11 @@ from pathlib import Path
 
 import os
 import environ
+
 env = environ.Env(
     # set casting, default value
     DEBUG=(bool, False)
 )
-
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -36,7 +36,6 @@ DEBUG = env('DEBUG', default=False)
 
 ALLOWED_HOSTS = env('ALLOWED_HOSTS').split(';')
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -47,6 +46,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'user.apps.UserConfig',
+    'core.apps.CoreConfig',
 ]
 
 MIDDLEWARE = [
@@ -80,14 +80,12 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'schoolmanage.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
 DATABASES = {
     'default': env.db()
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
@@ -107,7 +105,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
 
@@ -121,7 +118,6 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 AUTH_USER_MODEL = 'user.CustomUser'
 
 # Static files (CSS, JavaScript, Images)
@@ -129,4 +125,18 @@ AUTH_USER_MODEL = 'user.CustomUser'
 
 STATIC_URL = '/static/'
 
+STATICFILES_DIRS = [
+    BASE_DIR / "static",
+]
 
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+IS_EMAIL_BACKEND = env.bool('IS_EMAIL_BACKEND', default=False)
+
+if IS_EMAIL_BACKEND:
+    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+    EMAIL_HOST = env('EMAIL_HOST')
+    EMAIL_USE_TLS = True
+    EMAIL_PORT = 587
+    EMAIL_HOST_USER = env('EMAIL_HOST_USER')
+    EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
